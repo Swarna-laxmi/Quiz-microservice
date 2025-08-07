@@ -22,7 +22,35 @@ public class QuestionService {
     public List<Question> getByCategory(String category) {
         return repo.findByCategory(category);
     }
+
+    public String addQuestion(Question question) {
+         repo.save(question);
+         return "success";
+    }
+
+    public String updateQuestionById(Question question) {
+       /* Question  q=new Question();
+        q.setCategory(question.getCategory());
+        q.setDifficultyLevel(question.getDifficultyLevel());
+        q.setQuestionText(question.getQuestionText());
+        q.setOption_A(question.getOption_A());
+        q.setOption_B(question.getOption_B());
+        q.setOption_C(question.getOption_C());
+        q.setOption_D(question.getOption_D());
+        q.setCorrectAnswer(question.getCorrectAnswer());*/
+        repo.save(question);
+        return "updated";
+    }
+
+    public String deleteQuestionById(Long id) {
+        if (!repo.existsById(id)) {
+            return "Question not found";
+        }
+        repo.deleteById(id);
+        return "Question with ID " + id + " deleted successfully";
+    }
 }
+
 
 
 
