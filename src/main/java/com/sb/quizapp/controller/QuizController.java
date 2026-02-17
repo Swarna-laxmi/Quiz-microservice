@@ -1,0 +1,39 @@
+package com.sb.quizapp.controller;
+
+import com.sb.quizapp.model.Question;
+import com.sb.quizapp.model.QuestionWrapper;
+import com.sb.quizapp.model.Response;
+import com.sb.quizapp.service.QuizService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("quiz")
+public class QuizController {
+
+    @Autowired
+    private QuizService quizService;
+
+    @PostMapping("create")
+    public ResponseEntity<String>  createQuiz(@RequestParam String category, @RequestParam int numQ, @RequestParam String title)
+    {
+       return quizService.createQuiz(category,numQ,title);
+    }
+
+    @GetMapping("getQuiz/{id}")
+    public ResponseEntity<List<QuestionWrapper>> getQuizQuestion(@PathVariable Integer id)
+    {
+      return   quizService.getQuizQuestion(id);
+    }
+
+    @PostMapping("submit/{id}")
+    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses)
+    {
+        return quizService.submitQuiz(id,responses);
+    }
+
+
+}
